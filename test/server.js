@@ -4,7 +4,7 @@ var  chai = require('chai');
 const should = chai.should(); 
 var  request = require('supertest');
 
-describe("color-converter API test", function () {
+describe("node-api-goat API test", function () {
 
   var server;
   before(function () {

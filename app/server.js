@@ -79,6 +79,6 @@ app.get('/redirect', function (req, res) {
 
 var server = app.listen(3000, function () {
   var port = server.address().port;
-  console.log('color-converter app listening at port %s', port);
+  console.log('node-api-goat app listening at port %s', port);
 });
 module.exports = server;

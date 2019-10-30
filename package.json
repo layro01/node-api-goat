@@ -1,7 +1,7 @@
 {
   "name": "api-node-goat",
   "version": "0.0.1",
-  "description": "A simple Node.js sample Express color converter application that can translate from RGB (red, green, blue) to hexadecimal color representations.",
+  "description": "A simple Express.JS color converter application that can translate from RGB (red, green, blue) to hexadecimal color representations.",
   "main": "index.js",
   "scripts": {
     "start": "node -r agent_nodejs_linux64 app/server.js",
