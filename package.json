@@ -1,0 +1,21 @@
+{
+  "name": "api-node-goat",
+  "version": "0.0.1",
+  "description": "A simple Node.js sample Express color converter application that can translate from RGB (red, green, blue) to hexadecimal color representations.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r agent_nodejs_linux64 app/server.js",
+    "test": "mocha --require ../../iast-dev/out/agent/Debug/nodejs/agent_nodejs_darwin64.node 'test/*.js'"
+  },
+  "author": "Rob Layzell",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "should": "^13.2.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "supertest": "^4.0.2"
+  }
+}
