@@ -14,5 +14,6 @@ export IASTAGENT_LOGGING_STDERR_LEVEL=info
 # export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=$1
 # export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=$2
 
-#node -r ./agent_nodejs_linux64 app/server.js
-node -r ../../iast-dev/out/agent/Debug/nodejs/agent_nodejs_darwin64 app/server.js
+export REQUIRE_IAST_AGENT="-r ../iast-dev/out/agent/Debug/nodejs/agent_nodejs_linux64"
+
+node ${REQUIRE_IAST_AGENT} app/server.js
