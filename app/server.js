@@ -2,6 +2,7 @@ var express = require("express");
 var serialize = require('node-serialize');
 var cprocess = require('child_process');
 var libxmljs = require('libxmljs');
+var fse = require("fs-extra");
 var app = express();
 
 var converter = require("./converter");
@@ -45,10 +46,11 @@ app.get("/hexToRgb", function(req, res) {
 
 // Id:          CWE-73
 // Description: External Control of File Name or Path
-// Exploit URL: http://localhost:3000/cwe73/download?file=README.md
+// Exploit URL: http://localhost:3000/cwe73/read?foo=package.json
 // Status:      PASS
-app.get('/cwe73/download', function (req, res) {
-  res.download(req.query.file);
+app.get("/cwe73/read", function(req, res) {
+  fse.readJsonSync(req.query.foo)
+  res.send("ExternalControlFile");
 });
 
 // Id:          CWE-79

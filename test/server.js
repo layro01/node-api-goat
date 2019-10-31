@@ -15,9 +15,9 @@ describe("node-api-goat API test", function () {
   });
 
   describe("CWE-73: External Control of File Name or Path", function() {
-    it('downloads a sensitive file from the server', function (done) {
+    it('reads a sensitive file from the server', function (done) {
         request(server)
-          .get('/cwe73/download?file=package.json')
+          .get('/cwe73/read?foo=package.json')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200);
