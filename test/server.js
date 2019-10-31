@@ -18,11 +18,16 @@ describe("node-api-goat API test", function () {
     this.timeout(25000);
     it('downloads a sensitive file from the server', function (done) {
         request(server)
-          .get('/cwe73/download?file=package.json')
-          .set('Accept', 'application/json')
+          .get('/cwe73/read?foo=package.json')
           .expect('Content-Type', /json/)
-          .expect(200);
-          done();
+          .expect(200)
+          .end((err, res) => {
+            if(err){
+              console.log(err)
+            }
+            res.text.should.be.include('ExternalControlFile');
+            return done();
+          });
     });
   });
 
@@ -44,8 +49,14 @@ describe("node-api-goat API test", function () {
     it('appends a file name to the HTTP response', function (done) {
         request(server)
           .get('/cwe113/split?key=myKey&value=myValueThatCouldHaveCRLFs')
-          .expect(200);
-          done();
+          .expect(200)
+          .end((err, res) => {
+            if(err){
+              console.log(err)
+            }
+            res.text.should.be.include('Check your headers!');
+            return done();
+          });
     });
   });
 
@@ -65,8 +76,13 @@ describe("node-api-goat API test", function () {
     it('echoes back what you send in the text query string parameter via a redirect', function (done) {
         request(server)
           .get('/cwe601/redirect?text=hello')
-          .expect(302); // HTTP response code for Redirect is 302
-          done();
+          .expect(302) // HTTP response code for Redirect is 302
+          .end((err, res) => {
+            if(err){
+              console.log(err)
+            }
+            return done();
+          });
     });
   });
 
