@@ -48,6 +48,7 @@ describe("node-api-goat API test", function () {
     });
   });
 
+  /*
   describe("CWE-201: Information Exposure Through Sent Data", function () {
     it('echoes back what you send in the text query string parameter via a redirect', function (done) {
         request(server)
@@ -59,6 +60,7 @@ describe("node-api-goat API test", function () {
           });
     });
   });
+  */
 
   describe("CWE-601: URL Redirection to Untrusted Site ('Open Redirect')", function () {
     it('echoes back what you send in the text query string parameter via a redirect', function (done) {
