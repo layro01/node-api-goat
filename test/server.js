@@ -20,8 +20,10 @@ describe("node-api-goat API test", function () {
           .get('/cwe73/read?foo=package.json')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(200);
-          done();
+          .expect(200)
+          .end((err, res) => {
+            return done();
+          });
     });
   });
 
