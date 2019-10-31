@@ -10,7 +10,10 @@
   "author": "Rob Layzell",
   "license": "ISC",
   "dependencies": {
+    "child_process": "^1.0.2",
     "express": "^4.16.4",
+    "libxmljs": "^0.19.7",
+    "node-serialize": "0.0.4",
     "should": "^13.2.3"
   },
   "devDependencies": {
