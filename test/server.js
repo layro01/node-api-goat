@@ -15,9 +15,10 @@ describe("node-api-goat API test", function () {
   });
 
   describe("CWE-73: External Control of File Name or Path", function() {
-    it('reads a sensitive file from the server', function (done) {
+    this.timeout(25000);
+    it('downloads a sensitive file from the server', function (done) {
         request(server)
-          .get('/cwe73/read?foo=package.json')
+          .get('/cwe73/download?file=package.json')
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(200);
@@ -48,7 +49,6 @@ describe("node-api-goat API test", function () {
     });
   });
 
-  /*
   describe("CWE-201: Information Exposure Through Sent Data", function () {
     it('echoes back what you send in the text query string parameter via a redirect', function (done) {
         request(server)
@@ -60,7 +60,6 @@ describe("node-api-goat API test", function () {
           });
     });
   });
-  */
 
   describe("CWE-601: URL Redirection to Untrusted Site ('Open Redirect')", function () {
     it('echoes back what you send in the text query string parameter via a redirect', function (done) {

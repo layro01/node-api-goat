@@ -70,7 +70,7 @@ app.get('/cwe113/split', function (req, res) {
   res.status(200).send('Check your headers!');
 });
 
-/*
+
 // Id:          CWE-201
 // Description: Information Exposure Through Sent Data
 // Exploit URL: http://localhost:3000/cwe201/exposure?text=sensitive
@@ -78,7 +78,7 @@ app.get('/cwe113/split', function (req, res) {
 app.get('/cwe201/exposure', function (req, res) {
   res.send(req.query.text);
 });
-*/
+
 
 // Id:          CWE-601
 // Description: URL Redirection to Untrusted Site ('Open Redirect')
