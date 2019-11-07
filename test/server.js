@@ -51,10 +51,11 @@ describe("node-api-goat API test", function () {
           .expect(200)
           .end((err, res) => {
             if(err){
-              console.log(err)
+              return done(err);
+            } else{
+              res.text.should.be.include('Check your headers!');
+              return done();
             }
-            res.text.should.be.include('Check your headers!');
-            return done();
           });
     });
   });
@@ -65,8 +66,12 @@ describe("node-api-goat API test", function () {
           .get('/cwe201/exposure?text=sensitive')
           .expect(200)
           .end((err, res) => {
-            res.text.should.be.include('sensitive');
-            return done();
+            if(err){
+              return done(err);
+            } else{
+              res.text.should.be.include('sensitive');
+              return done();
+            }
           });
     });
   });
@@ -78,9 +83,10 @@ describe("node-api-goat API test", function () {
           .expect(302) // HTTP response code for Redirect is 302
           .end((err, res) => {
             if(err){
-              console.log(err)
+              return done(err);
+            } else{
+              return done();
             }
-            return done();
           });
     });
   });
@@ -91,8 +97,12 @@ describe("node-api-goat API test", function () {
         .get('/cwe95/rgbToHex?red=255&green=255&blue=255')
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('ffffff');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('ffffff');
+            return done();
+          }
         });
     });
   });
@@ -103,8 +113,12 @@ describe("node-api-goat API test", function () {
         .get('/hexToRgb?hex=00ff00')
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('[0,255,0]');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('[0,255,0]');
+            return done();
+          }
         });
     });
   });
@@ -115,8 +129,12 @@ describe("node-api-goat API test", function () {
         .get('/cwe502/serialize?foo={"rce":"_$$ND_FUNC$$_function (){console.log(\'exploited\')}()"}')
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('node-serialize');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('node-serialize');
+            return done();
+          }
         });
     });
   });
@@ -127,8 +145,12 @@ describe("node-api-goat API test", function () {
         .get('/cwe78/childprocess?foo=pwd')
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('child_process');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('child_process');
+            return done();
+          }
         });
     });
   });
@@ -139,8 +161,12 @@ describe("node-api-goat API test", function () {
         .get('/cwe611/xmlref/?xml=<xml>xml</xml>')
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('xml');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('xml');
+            return done();
+          }
         });
     });
   });
