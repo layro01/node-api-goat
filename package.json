@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node app/server.js",
-    "test": "mocha 'test/*.js'"
+    "test": "LD_LIBRARY_PATH=$PWD mocha --require ../../../agent_linux64.node 'test/*.js'"
   },
   "author": "Rob Layzell",
   "license": "ISC",
