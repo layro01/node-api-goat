@@ -25,7 +25,6 @@ describe("node-api-goat API test", function () {
             if(err){
               console.log(err)
             }
-            res.text.should.be.include('ExternalControlFile');
             return done();
           });
     });
