@@ -7,6 +7,11 @@ yarn-error.log*
 iast*.txt
 iast*.ndjson
 
+# Veracode Interactive files
+agent_linux64.node
+iastagent_resources.zip
+libagent_linux64.so
+
 # Runtime data
 pids
 *.pid
