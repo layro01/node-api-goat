@@ -23,9 +23,10 @@ describe("node-api-goat API test", function () {
           .expect(200)
           .end((err, res) => {
             if(err){
-              console.log(err)
+              return done(err);
+            } else{
+              return done();
             }
-            return done();
           });
     });
   });
@@ -38,8 +39,12 @@ describe("node-api-goat API test", function () {
         .expect('Content-Type', /text/)
         .expect(200)
         .end((err, res) => {
-          res.text.should.be.include('<p>You sent this: hello</p>');
-          return done();
+          if(err){
+            return done(err);
+          } else{
+            res.text.should.be.include('<p>You sent this: hello</p>');
+            return done();
+          }
         });
     });
   });
