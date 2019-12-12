@@ -14,6 +14,16 @@ export IASTAGENT_LOGGING_STDERR_LEVEL=info
 # export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=$1
 # export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=$2
 
-export REQUIRE_IAST_AGENT="-r ../iast-dev/out/agent/Debug/nodejs/agent_nodejs_linux64"
+# Set NODE_PATH to use a local version of the IAST Agent already on your system.
+export NODE_PATH="/mnt/c/iast/iast-dev/out/agent/Debug/universal"
 
-node ${REQUIRE_IAST_AGENT} app/server.js
+if [ -z ${NODE_PATH+x} ]; then 
+    echo "NODE_PATH is unset. Downloading latest IAST Agent to current directory..."
+    curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh
+    export MOCHA_OPTS="--require ./agent_linux64.node"
+    LD_LIBRARY_PATH=$PWD npm test
+else 
+    echo "Loading IAST Agent from '$NODE_PATH'"
+    export MOCHA_OPTS="--require agent_linux64.node"
+    npm test
+fi
