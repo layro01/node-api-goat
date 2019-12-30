@@ -103,7 +103,7 @@ app.get("/cwe502/serialize", function(req, res) {
 app.get("/cwe78/childprocess", function(req, res) {
   cprocess.exec(req.query.foo, (error,stdout,stderr) => {
   if (error) {
-    console.log("Taking error-path through testcase (not necessarily a problem).");
+    console.log(`Error executing endpoint /cwe78/childprocess: ${error}`);
   }});
   res.send("child_process");
 });

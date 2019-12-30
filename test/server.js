@@ -147,7 +147,7 @@ describe("node-api-goat API test", function () {
   describe("CWE-78: OS Command Injection", function () {
     it('Command injection exploit', function (done) {
       request(server)
-        .get('/cwe78/childprocess?foo=pwd')
+        .get('/cwe78/childprocess?foo=echo+this+was+sent+from+the+client')
         .expect(200)
         .end((err, res) => {
           if(err){
