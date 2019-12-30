@@ -13,9 +13,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                wrap([$class: 'VeracodeInteractiveBuildWrapper', location: 'localhost', port: '10010']) {
-                    sh 'curl -sSL https://s3.us-east-2.amazonaws.com/app.hailstone.io/iast-ci.sh | sh'
-                    sh 'npm test'
+                wrap([$class: 'VeracodeInteractiveBuildWrapper', location: 'host.docker.internal', port: '10010']) {
+                    sh 'curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh'
+                    sh 'LD_LIBRARY_PATH=$WORKSPACE npm test'
                 }
             }
         }
