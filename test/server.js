@@ -5,6 +5,7 @@ const should = chai.should();
 var  request = require('supertest');
 
 describe("node-api-goat API test", function () {
+  this.timeout(25000);
 
   var server;
   before(function () {
@@ -15,7 +16,6 @@ describe("node-api-goat API test", function () {
   });
 
   describe("CWE-73: External Control of File Name or Path", function() {
-    this.timeout(25000);
     it('downloads a sensitive file from the server', function (done) {
         request(server)
           .get('/cwe73/read?foo=package.json')
@@ -32,7 +32,6 @@ describe("node-api-goat API test", function () {
   });
 
   describe("CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')", function () {
-    this.timeout(25000);
     it('echoes back what you send in the text query string parameter', function (done) {
       request(server)
         .get('/cwe79/echo?text=hello')
