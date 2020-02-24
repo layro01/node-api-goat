@@ -14,8 +14,7 @@ pipeline {
       steps {
         wrap([$class: 'VeracodeInteractiveBuildWrapper', location: 'host.docker.internal', port: '10010']) {
           sh 'curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh'
-          sh 'export IASTAGENT_LOGGING_STDERR_LEVEL=info'
-          sh 'LD_LIBRARY_PATH=$WORKSPACE npm run test-iast'
+          sh 'LD_LIBRARY_PATH=$WORKSPACE IASTAGENT_LOGGING_STDERR_LEVEL=info npm run test-iast'
         }
       }
     }
