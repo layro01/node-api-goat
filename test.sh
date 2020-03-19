@@ -29,7 +29,7 @@ export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=localhost
 export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=10010
 export AGENT_SERVER_URL="https://${IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION}:${IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT}/iast/as/v1"
 
-# Set a unique identifier for this run (based on the folder name and timestamp)
+# Set a unique identifier for this run (based on the folder name and timestamp).
 export BUILD_TAG=$(basename "$PWD")-$(date +%Y-%m-%d_%H-%M-%S)
 echo "Using BUILD_TAG: ${BUILD_TAG}"
 
@@ -40,7 +40,7 @@ if [[ "$status_code" -ne 200 ]]; then
   exit 1
 fi;
 
-# Send session_start event to Agent Server and save off the session_id returned.
+# Send session_start event to Agent Server and save off the session_id returned in an environment variable.
 SESSION_ID=$(curl -H "Content-Type:application/json" -H "x-iast-event:session_start" --silent --insecure -X POST -d "{\"BUILD_TAG\":\"${BUILD_TAG}\"}" ${AGENT_SERVER_URL}/events | jq -r '.session_id')
 echo "Using session_id: ${SESSION_ID}"
 
@@ -60,7 +60,7 @@ else
     LD_LIBRARY_PATH=$NODE_PATH mocha --require agent_linux64.node test/*.js
 fi
 
-# Send session_stop event to Agent Server.
+# (Optional) Send session_stop event to Agent Server.
 curl -H "Content-Type:application/json" -H "x-iast-event:session_stop" -H "x-iast-session-id:${SESSION_ID}" --silent --output /dev/null --insecure -X POST ${AGENT_SERVER_URL}/events
 
 # Print the Veracode Interactive Summary Report to the console.
