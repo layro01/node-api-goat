@@ -44,21 +44,8 @@ fi;
 SESSION_ID=$(curl -H "Content-Type:application/json" -H "x-iast-event:session_start" --silent --insecure -X POST -d "{\"BUILD_TAG\":\"${BUILD_TAG}\"}" ${AGENT_SERVER_URL}/events | jq -r '.session_id')
 echo "Using session_id: ${SESSION_ID}"
 
-# Set NODE_PATH to use a local version of the IAST Agent already on your system.
-# export NODE_PATH="/path/to/iast/agent/binary"
-
-if [[ -z ${NODE_PATH+x} && ! -r agent_linux64.node ]]; then 
-    echo "NODE_PATH is unset and no IAST Agent in current directory, downloading latest version..."
-    curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh
-fi
-
-if [ -z ${NODE_PATH+x} ]; then
-    echo "Loading IAST Agent from current directory '$PWD'"
-    LD_LIBRARY_PATH=$PWD mocha --require ./agent_linux64.node test/*.js
-else 
-    echo "Loading IAST Agent from '$NODE_PATH'."
-    LD_LIBRARY_PATH=$NODE_PATH mocha --require agent_linux64.node test/*.js
-fi
+# Run the tests.
+LD_LIBRARY_PATH=$PWD npm run test-iast
 
 # (Optional) Send session_stop event to Agent Server.
 curl -H "Content-Type:application/json" -H "x-iast-event:session_stop" -H "x-iast-session-id:${SESSION_ID}" --silent --output /dev/null --insecure -X POST ${AGENT_SERVER_URL}/events
