@@ -22,7 +22,7 @@ process.on('SIGINT', gracefulShutdown);
 
 // Id:          CWE-95
 // Description: Eval Injection
-// Exploit URL: http://localhost:3000/cwe95/rgbToHex?red=255&green=255&blue=255
+// Exploit URL: http://localhost:3001/cwe95/rgbToHex?red=255&green=255&blue=255
 // Status:      PASS
 app.get("/cwe95/rgbToHex", function(req, res) {
   // To fix these security vulnerabilities, 
@@ -46,7 +46,7 @@ app.get("/hexToRgb", function(req, res) {
 
 // Id:          CWE-73
 // Description: External Control of File Name or Path
-// Exploit URL: http://localhost:3000/cwe73/read?foo=package.json
+// Exploit URL: http://localhost:3001/cwe73/read?foo=package.json
 // Status:      PASS
 app.get("/cwe73/read", function(req, res) {
   res.send(fse.readJsonSync(req.query.foo));
@@ -54,7 +54,7 @@ app.get("/cwe73/read", function(req, res) {
 
 // Id:          CWE-79
 // Description: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
-// Exploit URL: http://localhost:3000/cwe79/echo?text=hello
+// Exploit URL: http://localhost:3001/cwe79/echo?text=hello
 // Status:      PASS
 app.get('/cwe79/echo', function (req, res) {
   res.send("<p>You sent this: " + req.query.text + "</p>")
@@ -62,7 +62,7 @@ app.get('/cwe79/echo', function (req, res) {
 
 // Id:          CWE-113
 // Description: Improper Neutralization of CRLF Sequences in HTTP Headers ('HTTP Response Splitting')
-// Exploit URL: http://localhost:3000/cwe113/split?key=myKey&value=myValueThatCouldHaveCRLFs
+// Exploit URL: http://localhost:3001/cwe113/split?key=myKey&value=myValueThatCouldHaveCRLFs
 // Status:      PASS
 app.get('/cwe113/split', function (req, res) {
   res.append(req.query.key, req.query.value);
@@ -72,7 +72,7 @@ app.get('/cwe113/split', function (req, res) {
 
 // Id:          CWE-201
 // Description: Information Exposure Through Sent Data
-// Exploit URL: http://localhost:3000/cwe201/exposure?text=sensitive
+// Exploit URL: http://localhost:3001/cwe201/exposure?text=sensitive
 // Status:      PASS
 app.get('/cwe201/exposure', function (req, res) {
   res.send(req.query.text);
@@ -81,15 +81,15 @@ app.get('/cwe201/exposure', function (req, res) {
 
 // Id:          CWE-601
 // Description: URL Redirection to Untrusted Site ('Open Redirect')
-// Exploit URL: http://localhost:3000/cwe601/redirect?text=www.maliciouswebsite.com
+// Exploit URL: http://localhost:3001/cwe601/redirect?text=www.maliciouswebsite.com
 // Status:      PASS
 app.get('/cwe601/redirect', function (req, res) {
-  res.redirect("http://localhost:3000/echo?text=" + req.query.text + " (Redirected)");
+  res.redirect("http://localhost:3001/echo?text=" + req.query.text + " (Redirected)");
 });
 
 // Id:          CWE-502
 // Description: Deserialization of Untrusted Data
-// Exploit URL: http://localhost:3000/cwe502/serialize?foo={"rce":"_$$ND_FUNC$$_function (){console.log('exploited')}()"}
+// Exploit URL: http://localhost:3001/cwe502/serialize?foo={"rce":"_$$ND_FUNC$$_function (){console.log('exploited')}()"}
 // Status:      PASS
 app.get("/cwe502/serialize", function(req, res) {
   serialize.unserialize(req.query.foo);
@@ -98,7 +98,7 @@ app.get("/cwe502/serialize", function(req, res) {
 
 // Id:          CWE-78
 // Description: OS Command Injection
-// Exploit URL: http://localhost:3000/cwe78/childprocess?foo=pwd
+// Exploit URL: http://localhost:3001/cwe78/childprocess?foo=pwd
 // Status:      PASS
 app.get("/cwe78/childprocess", function(req, res) {
   cprocess.exec(req.query.foo, (error,stdout,stderr) => {
@@ -110,14 +110,14 @@ app.get("/cwe78/childprocess", function(req, res) {
 
 // Id:          CWE-611
 // Description: Improper Restriction of XML External Entity Reference
-// Exploit URL: http://localhost:3000/cwe611/xmlref/?xml=<xml>xml</xml>
+// Exploit URL: http://localhost:3001/cwe611/xmlref/?xml=<xml>xml</xml>
 // Status:      PASS
 app.get('/cwe611/xmlref', function (req, res) {
   var xmlout = libxmljs.parseXmlString(req.query.xml, {noent:true});
 	res.send(xmlout.childNodes()[0].toString());
 });
 
-var server = app.listen(3000, function () {
+var server = app.listen(3001, function () {
   var port = server.address().port;
   //console.log('node-api-goat app listening at port %s', port);
 });
