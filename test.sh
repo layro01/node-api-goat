@@ -44,6 +44,10 @@ fi;
 SESSION_ID=$(curl -H "Content-Type:application/json" -H "x-iast-event:session_start" --silent --insecure -X POST -d "{\"BUILD_TAG\":\"${BUILD_TAG}\"}" ${AGENT_SERVER_URL}/events | jq -r '.session_id')
 echo "Using session_id: ${SESSION_ID}"
 
+# Download the latest version of the IAST Agent from the Agent Server.
+# curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh
+curl -k -sSL ${AGENT_SERVER_URL}/downloads | sh
+
 # Run the tests.
 LD_LIBRARY_PATH=$PWD npm run test-iast
 
