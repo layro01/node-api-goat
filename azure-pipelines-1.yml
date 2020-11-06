@@ -30,7 +30,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        curl --write-out %(http_code) --silent --output /dev/null --insecure $(AGENT_SERVER_URL)
+        curl --write-out %http_code --silent --output /dev/null --insecure $(AGENT_SERVER_URL)
         echo http_code: $http_code
         export BUILD_TAG='$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
