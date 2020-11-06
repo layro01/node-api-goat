@@ -30,10 +30,9 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        sudo apt-get update
-        sudo apt-get -y install jq
+        jq --version
         curl -k -L $(AGENT_SERVER_URL)
-        export BUILD_TAG=$(Build.BuildNumber)
+        export BUILD_TAG="$(Build.BuildNumber)"
         echo $(BUILD_TAG)
 
   - task: NodeTool@0
