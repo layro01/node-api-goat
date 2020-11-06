@@ -30,9 +30,9 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        curl -k -L $(AGENT_SERVER_URL)
+        status_code=$(curl --write-out %(http_code) --silent --output /dev/null --insecure $(AGENT_SERVER_URL))
+        echo $status_code
         export BUILD_TAG='$(Build.BuildNumber)'
-        echo '$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
 
   - task: NodeTool@0
