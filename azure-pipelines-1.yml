@@ -30,10 +30,10 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        jq --version
         curl -k -L $(AGENT_SERVER_URL)
-        export BUILD_TAG="$(Build.BuildNumber)"
-        echo $(BUILD_TAG)
+        export BUILD_TAG='$(Build.BuildNumber)'
+        echo $(Build.BuildNumber)
+        echo BUILD_TAG=$(BUILD_TAG)
 
   - task: NodeTool@0
     displayName: 'Install Node.js'
