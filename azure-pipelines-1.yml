@@ -33,7 +33,7 @@ steps:
         curl -k -L $(AGENT_SERVER_URL)
         export BUILD_TAG='$(Build.BuildNumber)'
         echo '$(Build.BuildNumber)'
-        echo "Using BUILD_TAG: $(BUILD_TAG)"
+        echo Using BUILD_TAG: $BUILD_TAG
 
   - task: NodeTool@0
     displayName: 'Install Node.js'
