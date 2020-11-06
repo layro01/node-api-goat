@@ -24,17 +24,21 @@ services:
 
 steps:
   - task: Bash@3
+    displayName: 'Before Script'
     inputs:
       targetType: 'inline'
       script: |
-        # Write your commands here
-        echo 'Hello world'
+        apt-get update
+        apt-get -y install jq
+        curl -k $(AGENT_SERVER_URL)
+        export BUILD_TAG=$(TeamProject)_$(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
+        echo $(BUILD_TAG)
 
   - task: NodeTool@0
+    displayName: 'Install Node.js'
     inputs:
       versionSpec: '8.x'
-    displayName: 'Install Node.js'
-
+    
   - task: Npm@1
     displayName: 'Build'
     inputs:
