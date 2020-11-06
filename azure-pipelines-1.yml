@@ -38,6 +38,8 @@ steps:
         echo Agent Server status: $status_code
         export BUILD_TAG='$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
+        SESSION_ID=`curl -H "Content-Type:application/json" -H "x-iast-event:session_start" --silent --insecure -X POST -d "{\"BUILD_TAG\":\"${BUILD_TAG}\"}" ${AGENT_SERVER_URL}/events | jq -r '.session_id'`
+        echo Using session_id: $SESSION_ID
 
   - task: NodeTool@0
     displayName: 'Install Node.js'
