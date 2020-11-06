@@ -1,0 +1,47 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  containers:
+  - container: 'iast_agent_server'
+    image: 'veracode/iast-agent-server:latest'
+    ports:
+    - 10010:10010
+    env:
+      VERACODE_API_KEY_ID: $(veracode_api_key_id)
+      VERACODE_API_KEY_SECRET: $(veracode_api_key_secret)
+
+services:
+  iast_agent_server: iast_agent_server
+
+steps:
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Write your commands here
+        echo 'Hello world'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '8.x'
+    displayName: 'Install Node.js'
+
+  - task: Npm@1
+    displayName: 'Build'
+    inputs:
+      command: 'install'
+    
+  - task: Npm@1
+    displayName: 'Test'
+    inputs:
+      command: 'custom'
+      customCommand: 'test'
