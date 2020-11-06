@@ -56,3 +56,10 @@ steps:
     inputs:
       command: 'custom'
       customCommand: 'test'
+
+  - task: Bash@3
+    displayName: 'Get Results'
+    inputs:
+      targetType: 'inline'
+      script: |
+        curl -H "Accept:text/plain" --insecure -X GET $(AGENT_SERVER_URL)/results?session_id=${SESSION_ID}
