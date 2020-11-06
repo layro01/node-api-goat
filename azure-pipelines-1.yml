@@ -48,7 +48,8 @@ steps:
         echo Using session_id: $SESSION_ID
 
         # Download the IAST Agent files.
-        curl --silent --output /dev/null --insecure ${AGENT_SERVER_URL}/downloads | sh
+        # curl --silent --output /dev/null --insecure ${AGENT_SERVER_URL}/downloads | sh
+        curl --insecure ${AGENT_SERVER_URL}/downloads | sh
         ls -la
 
   - task: NodeTool@0
