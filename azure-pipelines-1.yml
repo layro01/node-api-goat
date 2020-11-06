@@ -30,8 +30,10 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        status_code=`curl --write-out "%{http_code}" --silent --output /dev/null --insecure $(AGENT_SERVER_URL)`
-        echo http_code: $status_code
+        status_code=000
+        while [ $status_code -eq 000 ]
+          status_code=`curl --write-out "%{http_code}" --silent --output /dev/null --insecure $(AGENT_SERVER_URL)`
+        echo Agent Server status: $status_code
         export BUILD_TAG='$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
 
