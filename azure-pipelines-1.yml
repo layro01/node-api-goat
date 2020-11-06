@@ -32,7 +32,9 @@ steps:
       script: |
         status_code=000
         while [ $status_code -eq 000 ]
+        do
           status_code=`curl --write-out "%{http_code}" --silent --output /dev/null --insecure $(AGENT_SERVER_URL)`
+        done
         echo Agent Server status: $status_code
         export BUILD_TAG='$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
