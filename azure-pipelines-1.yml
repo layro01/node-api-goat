@@ -26,20 +26,30 @@ services:
 
 steps:
   - task: Bash@3
-    displayName: 'Before Script'
+    displayName: 'Initialize IAST'
     inputs:
       targetType: 'inline'
       script: |
+
+        # Wait for Agent Server to start up.
         status_code=000
         while [ $status_code -eq 000 ]
         do
           status_code=`curl --write-out "%{http_code}" --silent --output /dev/null --insecure $(AGENT_SERVER_URL)`
         done
         echo Agent Server status: $status_code
+
+        # Set the BUILD_TAG.
         export BUILD_TAG='$(Build.BuildNumber)'
         echo Using BUILD_TAG: $BUILD_TAG
+
+        # Allocate a session_id
         SESSION_ID=`curl -H "Content-Type:application/json" -H "x-iast-event:session_start" --silent --insecure -X POST -d "{\"BUILD_TAG\":\"${BUILD_TAG}\"}" ${AGENT_SERVER_URL}/events | jq -r '.session_id'`
         echo Using session_id: $SESSION_ID
+
+        # Download the IAST Agent files.
+        curl --silent --output /dev/null --insecure ${AGENT_SERVER_URL}/downloads | sh
+        ls -la
 
   - task: NodeTool@0
     displayName: 'Install Node.js'
@@ -58,8 +68,8 @@ steps:
       customCommand: 'test'
 
   - task: Bash@3
-    displayName: 'Get Results'
+    displayName: 'Get IAST Results'
     inputs:
       targetType: 'inline'
       script: |
-        curl -H "Accept:text/plain" --insecure -X GET $(AGENT_SERVER_URL)/results?session_id=${SESSION_ID}
+        curl -H "Accept:text/plain" --silent --insecure -X GET $(AGENT_SERVER_URL)/results?session_id=${SESSION_ID}
