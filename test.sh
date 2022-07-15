@@ -16,18 +16,8 @@ case "$OSTYPE" in
     ;;
 esac
 
-# Use the following options to configure the IAST Agent.
-# export IASTAGENT_LOGGING_STDERR_LEVEL=info # or debug
-# export IASTAGENT_LOGGING_FILE_ENABLED=true
-# export IASTAGENT_LOGGING_FILE_PATHNAME=./iastdebug.txt
-# export IASTAGENT_LOGGING_FILE_LEVEL=info # or debug
-# export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_ENABLED=true
-# export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_PATHNAME./iastoutput.ndjson
-# export IASTAGENT_ANNOTATIONHANDLER_JSONFILE_LEVEL=info # or debug
-export IASTAGENT_REMOTE_ENDPOINT_HTTP_ENABLED=true
-export IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION=localhost
-export IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT=10010
-export AGENT_SERVER_URL="https://${IASTAGENT_REMOTE_ENDPOINT_HTTP_LOCATION}:${IASTAGENT_REMOTE_ENDPOINT_HTTP_PORT}/iast/as/v1"
+# Set the location of the Agent Server.
+export AGENT_SERVER_URL="https://localhost:10010/iast/as/v1"
 
 # Set a unique identifier for this run (based on the folder name and timestamp).
 export BUILD_TAG=$(basename "$PWD")-$(date +%Y-%m-%d_%H-%M-%S)
@@ -45,11 +35,13 @@ SESSION_ID=$(curl -H "Content-Type:application/json" -H "x-iast-event:session_st
 echo "Using session_id: ${SESSION_ID}"
 
 # Download the latest version of the IAST Agent from the Agent Server.
-# curl -sSL https://s3.us-east-2.amazonaws.com/app.veracode-iast.io/iast-ci.sh | sh
-curl -k -sSL ${AGENT_SERVER_URL}/downloads | sh
+[ -d .iast ] || mkdir .iast
+pushd .iast > /dev/null
+curl --insecure -sSL ${AGENT_SERVER_URL}/downloads | sh
+popd
 
 # Run the tests.
-LD_LIBRARY_PATH=$PWD npm run test-iast
+LD_LIBRARY_PATH=$PWD/.iast npm run test-iast
 
 # (Optional) Send session_stop event to Agent Server.
 curl -H "Content-Type:application/json" -H "x-iast-event:session_stop" -H "x-iast-session-id:${SESSION_ID}" --silent --output /dev/null --insecure -X POST ${AGENT_SERVER_URL}/events

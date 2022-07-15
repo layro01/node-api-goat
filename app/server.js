@@ -1,7 +1,9 @@
 var express = require("express");
 var serialize = require('node-serialize');
 var cprocess = require('child_process');
-var libxmljs = require('libxmljs');
+// Error installing libxmljs:
+//     Error: Cannot find module '../'
+// var libxmljs = require('libxmljs');
 var fse = require("fs-extra");
 var app = express();
 
@@ -112,10 +114,10 @@ app.get("/cwe78/childprocess", function(req, res) {
 // Description: Improper Restriction of XML External Entity Reference
 // Exploit URL: http://localhost:3001/cwe611/xmlref/?xml=<xml>xml</xml>
 // Status:      PASS
-app.get('/cwe611/xmlref', function (req, res) {
-  var xmlout = libxmljs.parseXmlString(req.query.xml, {noent:true});
-	res.send(xmlout.childNodes()[0].toString());
-});
+//app.get('/cwe611/xmlref', function (req, res) {
+//  var xmlout = libxmljs.parseXmlString(req.query.xml, {noent:true});
+//	res.send(xmlout.childNodes()[0].toString());
+//});
 
 var server = app.listen(3001, function () {
   var port = server.address().port;

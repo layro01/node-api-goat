@@ -159,6 +159,7 @@ describe("node-api-goat API test", function () {
     });
   });
 
+  /*
   describe("CWE-611: Improper Restriction of XML External Entity Reference", function () {
     it('XML evaluation', function (done) {
       request(server)
@@ -174,5 +175,6 @@ describe("node-api-goat API test", function () {
         });
     });
   });
+  */
 
 });
