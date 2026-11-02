@@ -133,3 +133,10 @@ var server = app.listen(3001, function () {
   //console.log('node-api-goat app listening at port %s', port);
 });
 module.exports = server;
+
+// F2 T4 HOTSPOT TEST
+var crypto = require("crypto");
+app.get("/f2/t4", function (req, res) {
+  var hash = crypto.createHash("md5").update(String(req.query.n)).digest("hex");
+  res.send(hash);
+});
